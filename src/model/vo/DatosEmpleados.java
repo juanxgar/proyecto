@@ -13,6 +13,7 @@ public class DatosEmpleados {
    
    //Atributos
     private int id_empleado;
+    
     private String usuario;
     private String contrasenia;
     private String nombre;
