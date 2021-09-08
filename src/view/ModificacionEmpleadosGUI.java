@@ -141,7 +141,7 @@ public class ModificacionEmpleadosGUI extends javax.swing.JFrame {
         titulo1.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
         titulo1.setForeground(new java.awt.Color(238, 112, 82));
         titulo1.setText("MODIFICACIÓN DE DATOS DE EMPLEADO");
-        jPanel1.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
+        jPanel1.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, -1, -1));
 
         rbtnId_sede.setBackground(new java.awt.Color(255, 255, 255));
         rbtnId_sede.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N

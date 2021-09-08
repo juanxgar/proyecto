@@ -31,7 +31,8 @@ public class DatosEmpleadosDao {
             
             String query = "SELECT usuario, nombre, num_cedula, "
                 + "telefono, direccion, ciudad, cargo, id_sede"
-                + " FROM empleado";
+                + " FROM empleado"
+                    + " WHERE estado=true";
             
             PreparedStatement statement = conexion.prepareStatement(query);
             ResultSet resultado = statement.executeQuery();
@@ -101,5 +102,44 @@ public class DatosEmpleadosDao {
 
         //Retornar la instancia del material o el nulo para validaciones posteriores
         return empleadoRegistrado; 
+    }
+    
+    public DatosEmpleados eliminarEmpleado(DatosEmpleados eliminaEmpleado) throws SQLException{
+        DatosEmpleados empleadoEliminado = null;
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+
+            String consulta = "UPDATE empleado SET estado=false "
+                    + "WHERE usuario=?";
+            
+
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            statement.setString(1, eliminaEmpleado.getUsuario());
+            
+
+            //Realizar la actualización: Crear material
+            statement.executeUpdate();
+
+            //Cerrar interacciones con BD            
+            statement.close();
+
+            //Si el proceso fue exitoso cambiar el estado
+            empleadoEliminado = eliminaEmpleado;
+
+        }catch(SQLException e){
+            System.err.println("Error eliminando empleado! "+e);
+        }finally{
+            //Cierre del controlador
+            if(conexion != null){
+                conexion.close();
+            }
+        }
+
+        //Retornar la instancia del material o el nulo para validaciones posteriores
+        return empleadoEliminado; 
     }
 }

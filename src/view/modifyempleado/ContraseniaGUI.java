@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view.Modify;
+package view.modifyempleado;
 
 import view.*;
 import java.sql.SQLException;
@@ -22,14 +22,14 @@ import model.vo.DatosUsuario;
  *
  * @author usuario
  */
-public class UsuarioGUI extends javax.swing.JFrame {
+public class ContraseniaGUI extends javax.swing.JFrame {
 
     //Atributos
     
     /**
      * Creates new form ConsultaEmpleadosGUI
      */
-    public UsuarioGUI(){
+    public ContraseniaGUI(){
         initComponents();
         
         //No olvidar agregar esto para agregarle las animaciones
@@ -103,7 +103,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
                     try {
                         usuarioActualizado = d.actualizarUsuario(usuarioActualizar);
                     } catch (SQLException ex) {
-                        Logger.getLogger(UsuarioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ContraseniaGUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     if(usuarioActualizado != null){
@@ -199,7 +199,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
 
         jTextField8.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
         jTextField8.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jTextField8.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -229,7 +229,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
 
         tfUsuarioAnt.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
         tfUsuarioAnt.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuarioAnt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tfUsuarioAnt.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
         jPanel2.add(tfUsuarioAnt, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 170, 25));
 
         jLabel21.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
@@ -239,11 +239,11 @@ public class UsuarioGUI extends javax.swing.JFrame {
 
         tfUsuarioNuevo.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
         tfUsuarioNuevo.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuarioNuevo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tfUsuarioNuevo.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
         jPanel2.add(tfUsuarioNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 170, 25));
 
         tfContrasenia.setForeground(new java.awt.Color(153, 153, 153));
-        tfContrasenia.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tfContrasenia.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
         jPanel2.add(tfContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 170, 25));
 
         titulo.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
@@ -267,7 +267,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
         btnRegistrar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept-circular-button-outline.png"))); // NOI18N
         btnRegistrar.setText("Guardar Cambios");
-        btnRegistrar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnRegistrar.setBorder(new javax.swing.border.SoftBevelBorder(0));
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
@@ -313,14 +313,22 @@ public class UsuarioGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UsuarioGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ContraseniaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UsuarioGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ContraseniaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UsuarioGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ContraseniaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UsuarioGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ContraseniaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -333,7 +341,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UsuarioGUI().setVisible(true);
+                new ContraseniaGUI().setVisible(true);
             }
         });
     }
