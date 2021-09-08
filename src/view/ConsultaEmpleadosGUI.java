@@ -5,10 +5,20 @@
  */
 package view;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.dao.DatosEmpleadosDao;
 import model.vo.DatosEmpleados;
+import view.modifyempleado.UsuarioGUI;
 
 /**
  *
@@ -17,6 +27,7 @@ import model.vo.DatosEmpleados;
 public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
 
     //Atributos
+    DefaultTableModel tEmpleados = new DefaultTableModel();
     
     /**
      * Creates new form ConsultaEmpleadosGUI
@@ -27,15 +38,13 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
         //No olvidar agregar esto para agregarle las animaciones
         this.setLocationRelativeTo(null);
         this.setTitle("Empleados");
-        
         mostrarEmpleados();
         
     }
     
     private void mostrarEmpleados() {
-        //Se defin el table model
-        DefaultTableModel tEmpleados = new DefaultTableModel();
-        
+        //Se defin el table model globalmente
+       
         //Se agregan las columnas de la tabla a mostrar
         tEmpleados.addColumn("Usuario");
         tEmpleados.addColumn("Nombre");
@@ -47,7 +56,7 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
         tEmpleados.addColumn("ID sede");
         
         //Se setea el modelo
-        tableEmpleados.setModel(tEmpleados);
+        getTableEmpleados().setModel(tEmpleados);
         
         //Se obtiene el numero de columnas
         int numColumnas=tEmpleados.getColumnCount();
@@ -68,15 +77,39 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
         
         //Se vuelve a setear para agregar los elementos de la BD
         tableEmpleados.setModel(tEmpleados);
-    
     }
     
+    public void eliminarEmpleado(){
+        
+        DatosEmpleados empleadoEliminar = new DatosEmpleados();
+        String dato=null;
+        if(tableEmpleados.getSelectedRow()!=-1){
+            int input = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el empleado?");
+            
+            if(input==0){
+                dato=String.valueOf(tEmpleados.getValueAt(tableEmpleados.getSelectedRow(),0));
+                tableEmpleados.getModel(); //TableProducto es el nombre de mi tabla ;)
+                tEmpleados.removeRow(tableEmpleados.getSelectedRow());
+
+                empleadoEliminar.setUsuario(dato);
+                DatosEmpleados empleadoEliminado = null;
+                DatosEmpleadosDao d = new DatosEmpleadosDao();
+
+                try {
+                    empleadoEliminado = d.eliminarEmpleado(empleadoEliminar);
+                }catch (SQLException ex) {
+                    Logger.getLogger(UsuarioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un empleado para poder eliminarlo");            
+        }
+    }
     
-       public String[][] formatoRegistros(ArrayList<DatosEmpleados> consulta, int numeroColumnas){
+    public String[][] formatoRegistros(ArrayList<DatosEmpleados> consulta, int numeroColumnas){
         
         //Declaración del contenedor de retorno
         String[][] registros = new String[consulta.size()][numeroColumnas];        
-        
 
         //Desenvolver los objetos de la colección
         for (int i = 0; i < consulta.size(); i++) {            
@@ -95,6 +128,120 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
         return registros;
 
     }
+
+    public JButton getBtnRegistrar() {
+        return btnRegistrar;
+    }
+
+    public void setBtnRegistrar(JButton btnRegistrar) {
+        this.btnRegistrar = btnRegistrar;
+    }
+
+    public JButton getjButton1() {
+        return jButton1;
+    }
+
+    public void setjButton1(JButton jButton1) {
+        this.jButton1 = jButton1;
+    }
+
+    public JButton getjButton3() {
+        return jButton3;
+    }
+
+    public void setjButton3(JButton jButton3) {
+        this.jButton3 = jButton3;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    public JLabel getjLabel3() {
+        return jLabel3;
+    }
+
+    public void setjLabel3(JLabel jLabel3) {
+        this.jLabel3 = jLabel3;
+    }
+
+    public JPanel getjPanel1() {
+        return jPanel1;
+    }
+
+    public void setjPanel1(JPanel jPanel1) {
+        this.jPanel1 = jPanel1;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public void setjScrollPane1(JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    public JScrollPane getjScrollPane2() {
+        return jScrollPane2;
+    }
+
+    public void setjScrollPane2(JScrollPane jScrollPane2) {
+        this.jScrollPane2 = jScrollPane2;
+    }
+
+    public JScrollPane getjScrollPane3() {
+        return jScrollPane3;
+    }
+
+    public void setjScrollPane3(JScrollPane jScrollPane3) {
+        this.jScrollPane3 = jScrollPane3;
+    }
+
+    public JTable getjTable1() {
+        return jTable1;
+    }
+
+    public void setjTable1(JTable jTable1) {
+        this.jTable1 = jTable1;
+    }
+
+    public JTable getjTable2() {
+        return jTable2;
+    }
+
+    public void setjTable2(JTable jTable2) {
+        this.jTable2 = jTable2;
+    }
+
+    public JTable getTableEmpleados() {
+        return tableEmpleados;
+    }
+
+    public void setTableEmpleados(JTable tableEmpleados) {
+        this.tableEmpleados = tableEmpleados;
+    }
+
+    public JLabel getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(JLabel titulo) {
+        this.titulo = titulo;
+    }
+       
+    
 
 
     /**
@@ -250,6 +397,8 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        eliminarEmpleado();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
