@@ -33,6 +33,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
         initComponents();
         
         //No olvidar agregar esto para agregarle las animaciones
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Empleados");
         
@@ -64,15 +65,17 @@ public class UsuarioGUI extends javax.swing.JFrame {
         this.tfUsuarioAnt = tfUsuarioAnt;
     }
     
-    public void actualizarUsuario(){
+    public void actualizarUsuario() throws SQLException{
         //Se crea un objeto de este tipo debido a que alli se encuentra el metodo que obtiene la lista de elementos de tipo consulta empleados
         DatosUsuarioDao c = new DatosUsuarioDao();
         
         //Este objeto es el que tiene los datos de la base de datos, los metodos para obtener dichos valores
         ArrayList<DatosUsuario> lista = c.listaUsuario();
         
+        
         //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
         String[][] lista2 = formatoRegistros(lista, 3);
+        int existeUsuario= c.existeUsuario(getTfUsuarioNuevo().getText());
         
         String usuarioAnt="";
         String contrasenia="";
@@ -86,39 +89,53 @@ public class UsuarioGUI extends javax.swing.JFrame {
                 contrasenia=lista2[i][2];
             }
         }
-            
-        if(usuarioAnt.equals(getTfUsuarioAnt().getText())){
-            if(contrasenia.equals(getTfContrasenia().getText())){
-                if(!getTfUsuarioAnt().getText().equals(getTfUsuarioNuevo().getText())){
+        
+        if(getTfUsuarioAnt().getText().length()!=0
+                && getTfUsuarioNuevo().getText().length()!=0
+                && getTfContrasenia().getText().length()!=0){
+            if(usuarioAnt.equals(getTfUsuarioAnt().getText())){
+                if(contrasenia.equals(getTfContrasenia().getText())){
+                    if(!getTfUsuarioAnt().getText().equals(getTfUsuarioNuevo().getText())){
+                        if(existeUsuario==0){
+                            try {
+                                DatosUsuario usuarioActualizar = new DatosUsuario();
 
-                    DatosUsuario usuarioActualizar = new DatosUsuario();
+                                usuarioActualizar.setUsuarioNuevo(getTfUsuarioNuevo().getText());
+                                usuarioActualizar.setUsuarioAnt(getTfUsuarioAnt().getText());
+                                usuarioActualizar.setContrasenia(getTfContrasenia().getText());
 
-                    usuarioActualizar.setUsuarioNuevo(getTfUsuarioNuevo().getText());
-                    usuarioActualizar.setUsuarioAnt(getTfUsuarioAnt().getText());
-                    usuarioActualizar.setContrasenia(getTfContrasenia().getText());
+                                DatosUsuario usuarioActualizado =null;
+                                DatosUsuarioDao d = new DatosUsuarioDao();
+                                
+                                usuarioActualizado = d.actualizarUsuario(usuarioActualizar);
+                                
+                                if(usuarioActualizado != null){
+                                    JOptionPane.showMessageDialog(null, "El usuario del empleado se actualizó correctamente");
+                                    this.setVisible(false);
+                                    ModificacionEmpleadosGUI modificacion = new ModificacionEmpleadosGUI();
+                                    modificacion.setVisible(true);
+                                }else{
+                                    JOptionPane.showMessageDialog(null, "No se completó la actualización de datos");
+                                }
+                            } catch (SQLException ex) {
+                                Logger.getLogger(UsuarioGUI.class.getName()).log(Level.SEVERE, null, ex);
+                            }
 
-                    DatosUsuario usuarioActualizado =null;
-                    DatosUsuarioDao d = new DatosUsuarioDao();
-
-                    try {
-                        usuarioActualizado = d.actualizarUsuario(usuarioActualizar);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(UsuarioGUI.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    if(usuarioActualizado != null){
-                        JOptionPane.showMessageDialog(null, "El usuario del empleado se actualizó correctamente");
+                            
+                        }else{
+                            JOptionPane.showMessageDialog(null, "El usuario no está disponible. Intente con uno nuevo");
+                        }
                     }else{
-                        JOptionPane.showMessageDialog(null, "No se completó la actualización de datos");
+                        JOptionPane.showMessageDialog(null, "El nuevo usuario no puede ser igual al anterior");
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null, "El nuevo usuario no puede ser igual al anterior");
+                    JOptionPane.showMessageDialog(null, "Contraseña no valida");
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "Contraseña no valida");
+                JOptionPane.showMessageDialog(null, "Usuario Anterior Incorrecto");
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Usuario Anterior Incorrecto");
+            JOptionPane.showMessageDialog(null, "Los datos no pueden estar vacios");
         }
     }
     
@@ -167,9 +184,9 @@ public class UsuarioGUI extends javax.swing.JFrame {
         tfUsuarioNuevo = new javax.swing.JTextField();
         tfContrasenia = new javax.swing.JPasswordField();
         titulo = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jlAtras = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        btnRegistrar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -199,7 +216,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
 
         jTextField8.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
         jTextField8.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField8.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        jTextField8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -229,7 +246,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
 
         tfUsuarioAnt.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
         tfUsuarioAnt.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuarioAnt.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        tfUsuarioAnt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.add(tfUsuarioAnt, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 170, 25));
 
         jLabel21.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
@@ -239,11 +256,11 @@ public class UsuarioGUI extends javax.swing.JFrame {
 
         tfUsuarioNuevo.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
         tfUsuarioNuevo.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuarioNuevo.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        tfUsuarioNuevo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.add(tfUsuarioNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 170, 25));
 
         tfContrasenia.setForeground(new java.awt.Color(153, 153, 153));
-        tfContrasenia.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        tfContrasenia.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.add(tfContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 170, 25));
 
         titulo.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
@@ -251,29 +268,29 @@ public class UsuarioGUI extends javax.swing.JFrame {
         titulo.setText("CAMBIANDO USUARIO DE EMPLEADO");
         jPanel2.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, -1, -1));
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Back_64px.png"))); // NOI18N
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jlAtras.setBackground(new java.awt.Color(255, 255, 255));
+        jlAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Back_64px.png"))); // NOI18N
+        jlAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jlAtras.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+                jlAtrasMouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 50, 40));
+        jPanel2.add(jlAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 50, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/team_96px.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
 
-        btnRegistrar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
-        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept-circular-button-outline.png"))); // NOI18N
-        btnRegistrar.setText("Guardar Cambios");
-        btnRegistrar.setBorder(new javax.swing.border.SoftBevelBorder(0));
-        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept-circular-button-outline.png"))); // NOI18N
+        btnModificar.setText("Guardar Cambios");
+        btnModificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 370, 200, 50));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 370, 200, 50));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
 
@@ -282,17 +299,23 @@ public class UsuarioGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
-        actualizarUsuario();
-    }//GEN-LAST:event_btnRegistrarActionPerformed
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        try {
+            // TODO add your handling code here:
+            actualizarUsuario();
+            //ModificacionEmpleadosGUI consulta = new ModificacionEmpleadosGUI();
+            //consulta.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+    private void jlAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlAtrasMouseClicked
         // TODO add your handling code here:
-        ConsultaEmpleadosGUI consulta = new ConsultaEmpleadosGUI();
+        ModificacionEmpleadosGUI consulta = new ModificacionEmpleadosGUI();
         consulta.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jLabel2MouseClicked
+    }//GEN-LAST:event_jlAtrasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -363,12 +386,11 @@ public class UsuarioGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -377,6 +399,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JLabel jlAtras;
     private javax.swing.JPasswordField tfContrasenia;
     private javax.swing.JTextField tfUsuarioAnt;
     private javax.swing.JTextField tfUsuarioNuevo;

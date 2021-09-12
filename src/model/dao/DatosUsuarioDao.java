@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import model.vo.DatosEmpleados;
 import model.vo.DatosUsuario;
 import util.JDBCUtilities;
 
@@ -21,7 +20,7 @@ import util.JDBCUtilities;
  */
 public class DatosUsuarioDao {
     
-    public ArrayList<DatosUsuario> listaUsuario(){
+    public ArrayList<DatosUsuario> listaUsuario() throws SQLException{
         
         ArrayList<DatosUsuario> respuesta = new ArrayList<>();
         Connection conexion = null;
@@ -44,8 +43,47 @@ public class DatosUsuarioDao {
             }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error en la consulta " + e);
+        }finally{
+            //Cierre del controlador
+            if(conexion != null){
+                conexion.close();
+            }
         }
         return respuesta;
+    }
+    
+    public int existeUsuario(String usuarioExiste) throws SQLException{
+        Connection conexion = null;
+        JDBCUtilities conex = new JDBCUtilities();
+        
+        try{
+            conexion= conex.getConnection();
+
+            String consulta = "SELECT count(id_empleado) FROM empleado "
+                    + "WHERE usuario=?";
+
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            statement.setString(1, usuarioExiste);
+            
+            
+            //Realizar la actualización: Crear material
+            ResultSet resultado = statement.executeQuery();
+
+            if(resultado.next()){
+                return resultado.getInt(1);
+            }
+            return 1;
+
+        }catch(SQLException e){
+            System.err.println("Error modificando datos de empleado! "+e);
+            return 1;
+        }finally{
+            //Cierre del controlador
+            if(conexion != null){
+                conexion.close();
+            }
+        }
     }
     
     public DatosUsuario actualizarUsuario(DatosUsuario usuarioActualizar) throws SQLException{

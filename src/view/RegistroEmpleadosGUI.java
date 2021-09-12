@@ -38,6 +38,7 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
         //No olvidar agregar esto para agregarle las animaciones
         this.setLocationRelativeTo(null);
         this.setTitle("Empleados");
+        this.setResizable(false);
         
         
     }
@@ -151,6 +152,9 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
                 
                 try {
                     empleadoRegistrado = d.registrarEmpleado(nuevoEmpleado);
+                    this.setVisible(false);
+                    ConsultaEmpleadosGUI consulta = new ConsultaEmpleadosGUI();
+                    consulta.setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(RegistroEmpleadosGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }

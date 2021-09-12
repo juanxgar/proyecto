@@ -14,7 +14,7 @@ public class DatosContrasenia {
     private String contraseniaAnt;
     private String contraseniaNueva;
     
-    DatosContrasenia(){
+    public DatosContrasenia(){
         
     }
     

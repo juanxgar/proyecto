@@ -7,6 +7,7 @@ package view;
 
 import java.util.ArrayList;
 import model.vo.DatosEmpleados;
+import view.modifyempleado.UsuarioGUI;
 
 /**
  *
@@ -25,6 +26,7 @@ public class ModificacionEmpleadosGUI extends javax.swing.JFrame {
         //No olvidar agregar esto para agregarle las animaciones
         this.setLocationRelativeTo(null);
         this.setTitle("Empleados");
+        this.setResizable(false);
         
     }
     
@@ -261,6 +263,9 @@ public class ModificacionEmpleadosGUI extends javax.swing.JFrame {
 
     private void rbtnUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnUsuarioMouseClicked
         // TODO add your handling code here:
+        UsuarioGUI usuario = new UsuarioGUI();
+        usuario.setVisible(true);
+        this.setVisible(false);
         
     }//GEN-LAST:event_rbtnUsuarioMouseClicked
 

@@ -38,6 +38,7 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
         //No olvidar agregar esto para agregarle las animaciones
         this.setLocationRelativeTo(null);
         this.setTitle("Empleados");
+        this.setResizable(false);
         mostrarEmpleados();
         
     }
@@ -405,11 +406,15 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         RegistroEmpleadosGUI registro = new RegistroEmpleadosGUI();
         registro.setVisible(true);
+        this.setVisible(false);
         
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        ModificacionEmpleadosGUI consulta = new ModificacionEmpleadosGUI();
+        consulta.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
