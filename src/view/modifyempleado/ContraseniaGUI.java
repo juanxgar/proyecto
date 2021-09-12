@@ -13,10 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import model.dao.DatosEmpleadosDao;
-import model.dao.DatosUsuarioDao;
-import model.vo.DatosEmpleados;
-import model.vo.DatosUsuario;
+import model.dao.DatosContraseniaDao;
+import model.vo.DatosContrasenia;
 
 /**
  *
@@ -35,95 +33,112 @@ public class ContraseniaGUI extends javax.swing.JFrame {
         //No olvidar agregar esto para agregarle las animaciones
         this.setLocationRelativeTo(null);
         this.setTitle("Empleados");
+        this.setResizable(false);
         
         
     }
 
-
-    public JPasswordField getTfContrasenia() {
-        return tfContrasenia;
+    public JPasswordField getTfContraseniaAnt() {
+        return tfContraseniaAnt;
     }
 
-    public void setTfContrasenia(JPasswordField tfContrasenia) {
-        this.tfContrasenia = tfContrasenia;
+    public void setTfContraseniaAnt(JPasswordField tfContraseniaAnt) {
+        this.tfContraseniaAnt = tfContraseniaAnt;
     }
 
-    public JTextField getTfUsuarioNuevo() {
-        return tfUsuarioNuevo;
+    public JPasswordField getTfContraseniaNueva() {
+        return tfContraseniaNueva;
     }
 
-    public void setTfUsuarioNuevo(JTextField tfUsuarioNuevo) {
-        this.tfUsuarioNuevo = tfUsuarioNuevo;
+    public void setTfContraseniaNueva(JPasswordField tfContraseniaNueva) {
+        this.tfContraseniaNueva = tfContraseniaNueva;
     }
 
-    public JTextField getTfUsuarioAnt() {
-        return tfUsuarioAnt;
+    public JPasswordField getTfContraseniaNueva2() {
+        return tfContraseniaNueva2;
     }
 
-    public void setTfUsuarioAnt(JTextField tfUsuarioAnt) {
-        this.tfUsuarioAnt = tfUsuarioAnt;
+    public void setTfContraseniaNueva2(JPasswordField tfContraseniaNueva2) {
+        this.tfContraseniaNueva2 = tfContraseniaNueva2;
     }
+
+    public JTextField getTfUsuario() {
+        return tfUsuario;
+    }
+
+    public void setTfUsuario(JTextField tfUsuario) {
+        this.tfUsuario = tfUsuario;
+    }
+
     
-    public void actualizarUsuario(){
+    
+    public void actualizarContrasenia(){
         //Se crea un objeto de este tipo debido a que alli se encuentra el metodo que obtiene la lista de elementos de tipo consulta empleados
-        DatosUsuarioDao c = new DatosUsuarioDao();
+        DatosContraseniaDao c = new DatosContraseniaDao();
         
         //Este objeto es el que tiene los datos de la base de datos, los metodos para obtener dichos valores
-        ArrayList<DatosUsuario> lista = c.listaUsuario();
+        ArrayList<DatosContrasenia> lista = c.listaContrasenia();
         
         //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
         String[][] lista2 = formatoRegistros(lista, 3);
         
-        String usuarioAnt="";
-        String contrasenia="";
+        String usuario="";
+        String contraseniaAnt="";
         
         for(int i = 0; i<lista.size(); i++){
             
-            if(lista2[i][1].equals(getTfUsuarioAnt().getText())){
-                usuarioAnt=lista2[i][1];
+            if(lista2[i][0].equals(getTfUsuario().getText())){
+                usuario=lista2[i][0];
             }
-            if(lista2[i][2].equals(getTfContrasenia().getText())){
-                contrasenia=lista2[i][2];
+            if(lista2[i][1].equals(getTfContraseniaAnt().getText())){
+                contraseniaAnt=lista2[i][1];
             }
         }
             
-        if(usuarioAnt.equals(getTfUsuarioAnt().getText())){
-            if(contrasenia.equals(getTfContrasenia().getText())){
-                if(!getTfUsuarioAnt().getText().equals(getTfUsuarioNuevo().getText())){
+        if(usuario.equals(getTfUsuario().getText())){
+            if(contraseniaAnt.equals(getTfContraseniaAnt().getText())){
+                if(!getTfContraseniaAnt().getText().equals(getTfContraseniaNueva().getText())){
+                    if(getTfContraseniaNueva().getText().equals(getTfContraseniaNueva2().getText())){
+                        try {
+                            DatosContrasenia contraseniaActualizar = new DatosContrasenia();
 
-                    DatosUsuario usuarioActualizar = new DatosUsuario();
+                            contraseniaActualizar.setContraseniaNueva(getTfContraseniaNueva().getText());
+                            contraseniaActualizar.setUsuario(getTfUsuario().getText());
+                            contraseniaActualizar.setContraseniaAnt(getTfContraseniaAnt().getText());
 
-                    usuarioActualizar.setUsuarioNuevo(getTfUsuarioNuevo().getText());
-                    usuarioActualizar.setUsuarioAnt(getTfUsuarioAnt().getText());
-                    usuarioActualizar.setContrasenia(getTfContrasenia().getText());
+                            DatosContrasenia contraseniaActualizado =null;
+                            DatosContraseniaDao d = new DatosContraseniaDao();
 
-                    DatosUsuario usuarioActualizado =null;
-                    DatosUsuarioDao d = new DatosUsuarioDao();
+                            contraseniaActualizado = d.actualizarContrasenia(contraseniaActualizar);
 
-                    try {
-                        usuarioActualizado = d.actualizarUsuario(usuarioActualizar);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(ContraseniaGUI.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    if(usuarioActualizado != null){
-                        JOptionPane.showMessageDialog(null, "El usuario del empleado se actualizó correctamente");
+                            if(contraseniaActualizado != null){
+                                JOptionPane.showMessageDialog(null, "La contraseña del empleado se actualizó correctamente");
+                                this.setVisible(false);
+                                ModificacionEmpleadosGUI modificacion = new ModificacionEmpleadosGUI();
+                                modificacion.setVisible(true);
+                                
+                            }else{
+                                JOptionPane.showMessageDialog(null, "No se completó la actualización de datos");
+                            }
+                        }catch (SQLException ex) {
+                            Logger.getLogger(ContraseniaGUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }else{
-                        JOptionPane.showMessageDialog(null, "No se completó la actualización de datos");
+                        JOptionPane.showMessageDialog(null, "Las contraseñas nuevas no son iguales");
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null, "El nuevo usuario no puede ser igual al anterior");
+                    JOptionPane.showMessageDialog(null, "La nueva contraseña no puede ser igual a la anterior");
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "Contraseña no valida");
+                JOptionPane.showMessageDialog(null, "Contraseña antererior no valida");
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Usuario Anterior Incorrecto");
+            JOptionPane.showMessageDialog(null, "Verifique el nombre de usuario");
         }
     }
     
     
-    public String[][] formatoRegistros(ArrayList<DatosUsuario> consulta, int numeroColumnas){
+    public String[][] formatoRegistros(ArrayList<DatosContrasenia> consulta, int numeroColumnas){
         
         //Declaración del contenedor de retorno
         String[][] registros = new String[consulta.size()][numeroColumnas];        
@@ -131,9 +146,9 @@ public class ContraseniaGUI extends javax.swing.JFrame {
 
         //Desenvolver los objetos de la colección
         for (int i = 0; i < consulta.size(); i++) {
-            registros[i][0] = consulta.get(i).getUsuarioNuevo();
-            registros[i][1] = consulta.get(i).getUsuarioAnt();
-            registros[i][2] = consulta.get(i).getContrasenia();   
+            registros[i][0] = consulta.get(i).getUsuario();
+            registros[i][1] = consulta.get(i).getContraseniaAnt();
+            registros[i][2] = consulta.get(i).getContraseniaNueva();   
         }
 
         //Retornar registros en formato JTable
@@ -162,14 +177,16 @@ public class ContraseniaGUI extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        tfUsuarioAnt = new javax.swing.JTextField();
+        tfUsuario = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        tfUsuarioNuevo = new javax.swing.JTextField();
-        tfContrasenia = new javax.swing.JPasswordField();
+        tfContraseniaNueva2 = new javax.swing.JPasswordField();
         titulo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
+        tfContraseniaNueva = new javax.swing.JPasswordField();
+        tfContraseniaAnt = new javax.swing.JPasswordField();
+        jLabel18 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -199,7 +216,7 @@ public class ContraseniaGUI extends javax.swing.JFrame {
 
         jTextField8.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
         jTextField8.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField8.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        jTextField8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -219,37 +236,37 @@ public class ContraseniaGUI extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel16.setText("Usuario Anterior: ");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, -1, -1));
+        jLabel16.setText("Usuario: ");
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel17.setText("Contraseña: ");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, -1, -1));
+        jLabel17.setText("Repita la nueva Contraseña: ");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 320, -1, -1));
 
-        tfUsuarioAnt.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfUsuarioAnt.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuarioAnt.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
-        jPanel2.add(tfUsuarioAnt, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 170, 25));
+        tfUsuario.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
+        tfUsuario.setForeground(new java.awt.Color(153, 153, 153));
+        tfUsuario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(tfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 170, 25));
 
         jLabel21.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(238, 112, 82));
-        jLabel21.setText("Nuevo Usuario:");
-        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, -1, -1));
+        jLabel21.setText("Contraseña anterior:");
+        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 220, -1, -1));
 
-        tfUsuarioNuevo.setFont(new java.awt.Font("Decker", 0, 14)); // NOI18N
-        tfUsuarioNuevo.setForeground(new java.awt.Color(153, 153, 153));
-        tfUsuarioNuevo.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
-        jPanel2.add(tfUsuarioNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 170, 25));
-
-        tfContrasenia.setForeground(new java.awt.Color(153, 153, 153));
-        tfContrasenia.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
-        jPanel2.add(tfContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 170, 25));
+        tfContraseniaNueva2.setForeground(new java.awt.Color(153, 153, 153));
+        tfContraseniaNueva2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tfContraseniaNueva2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfContraseniaNueva2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(tfContraseniaNueva2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 320, 170, 25));
 
         titulo.setFont(new java.awt.Font("Decker", 1, 28)); // NOI18N
         titulo.setForeground(new java.awt.Color(238, 112, 82));
-        titulo.setText("CAMBIANDO USUARIO DE EMPLEADO");
-        jPanel2.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, -1, -1));
+        titulo.setText("CAMBIANDO CONTRASEÑA EMPLEADO");
+        jPanel2.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 550, 30));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8_Back_64px.png"))); // NOI18N
@@ -262,18 +279,41 @@ public class ContraseniaGUI extends javax.swing.JFrame {
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, 50, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/team_96px.png"))); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         btnRegistrar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accept-circular-button-outline.png"))); // NOI18N
         btnRegistrar.setText("Guardar Cambios");
-        btnRegistrar.setBorder(new javax.swing.border.SoftBevelBorder(0));
+        btnRegistrar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
             }
         });
         jPanel2.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 370, 200, 50));
+
+        tfContraseniaNueva.setForeground(new java.awt.Color(153, 153, 153));
+        tfContraseniaNueva.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tfContraseniaNueva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfContraseniaNuevaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(tfContraseniaNueva, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 170, 25));
+
+        tfContraseniaAnt.setForeground(new java.awt.Color(153, 153, 153));
+        tfContraseniaAnt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tfContraseniaAnt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfContraseniaAntActionPerformed(evt);
+            }
+        });
+        jPanel2.add(tfContraseniaAnt, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 170, 25));
+
+        jLabel18.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(238, 112, 82));
+        jLabel18.setText("Nueva contraseña: ");
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 530));
 
@@ -284,15 +324,27 @@ public class ContraseniaGUI extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
-        actualizarUsuario();
+        actualizarContrasenia();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        ConsultaEmpleadosGUI consulta = new ConsultaEmpleadosGUI();
+        ModificacionEmpleadosGUI consulta = new ModificacionEmpleadosGUI();
         consulta.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void tfContraseniaNueva2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfContraseniaNueva2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfContraseniaNueva2ActionPerformed
+
+    private void tfContraseniaNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfContraseniaNuevaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfContraseniaNuevaActionPerformed
+
+    private void tfContraseniaAntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfContraseniaAntActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfContraseniaAntActionPerformed
 
     /**
      * @param args the command line arguments
@@ -352,6 +404,7 @@ public class ContraseniaGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JPanel jPanel1;
@@ -361,9 +414,10 @@ public class ContraseniaGUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JPasswordField tfContrasenia;
-    private javax.swing.JTextField tfUsuarioAnt;
-    private javax.swing.JTextField tfUsuarioNuevo;
+    private javax.swing.JPasswordField tfContraseniaAnt;
+    private javax.swing.JPasswordField tfContraseniaNueva;
+    private javax.swing.JPasswordField tfContraseniaNueva2;
+    private javax.swing.JTextField tfUsuario;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }
