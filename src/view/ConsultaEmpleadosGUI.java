@@ -6,9 +6,13 @@
 package view;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.dao.DatosEmpleadosDao;
 import model.vo.DatosEmpleados;
+
+
+
 
 /**
  *
@@ -117,7 +121,7 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
         titulo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnEliminarEmpleado = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
@@ -210,16 +214,16 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
         jLabel3.setText("Atrás");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 60, -1, -1));
 
-        jButton1.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
-        jButton1.setText("Eliminar Empleado");
-        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarEmpleado.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
+        btnEliminarEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
+        btnEliminarEmpleado.setText("Eliminar Empleado");
+        btnEliminarEmpleado.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEliminarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnEliminarEmpleadoActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 260, 200, 50));
+        jPanel1.add(btnEliminarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 260, 200, 50));
 
         btnRegistrar.setFont(new java.awt.Font("Decker", 1, 14)); // NOI18N
         btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
@@ -248,9 +252,11 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadoActionPerformed
+    DefaultTableModel dtm = (DefaultTableModel) 
+            tableEmpleados.getModel(); //TableProducto es el nombre de mi tabla ;)
+        dtm.removeRow(tableEmpleados.getSelectedRow());
+    }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
@@ -301,8 +307,8 @@ public class ConsultaEmpleadosGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminarEmpleado;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

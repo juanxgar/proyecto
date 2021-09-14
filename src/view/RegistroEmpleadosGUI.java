@@ -167,6 +167,7 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
             }
         }else{
             JOptionPane.showMessageDialog(null, "No pueden haber elementos vacios");
+            
         }
     }
     
@@ -492,6 +493,7 @@ public class RegistroEmpleadosGUI extends javax.swing.JFrame {
 
     private void btnRegistrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrar1ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnRegistrar1ActionPerformed
 
     private void cbId_sedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbId_sedeActionPerformed
