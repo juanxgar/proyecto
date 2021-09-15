@@ -12,7 +12,7 @@ package model.vo;
 public class DatosSedes { 
    
    //Atributos
-    private int id_sede;
+    private String id_sede;
     private String direccion_sede;
     private String barrio_sede;
     private String ciudad_sede;
@@ -22,7 +22,7 @@ public class DatosSedes {
     
     }
       
-    public DatosSedes( int id_sede, String direccion_sede, String barrio_sede, String ciudad_sede, String telefono_sede){
+    public DatosSedes( String id_sede, String direccion_sede, String barrio_sede, String ciudad_sede, String telefono_sede){
         
         this.id_sede=id_sede;
         this.direccion_sede=direccion_sede;
@@ -32,11 +32,11 @@ public class DatosSedes {
         
     }
 
-    public int getId_sede() {
+    public String getId_sede() {
         return id_sede;
     }
 
-    public void setId_sede(int id_sede) {
+    public void setId_sede(String id_sede) {
         this.id_sede = id_sede;
     }
 

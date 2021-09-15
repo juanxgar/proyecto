@@ -60,7 +60,7 @@ public class DatosSedesDao {
         try{
             conexion= conex.getConnection();
 
-            String consulta = "UPDATE sede SET dir_sede=?,barrio_Sede=?,cuidad_Sede=?,tel_sede=? where idSede=? ";
+            String consulta = "UPDATE sede SET dir_sede=?,barrio_Sede=?,ciudad_Sede=?,tel_sede=? where id_sede=?";
 
             PreparedStatement statement = conexion.prepareStatement(consulta);
 
@@ -68,10 +68,7 @@ public class DatosSedesDao {
             statement.setString(2, modificarSede.getBarrio_sede());
             statement.setString(3, modificarSede.getCiudad_sede());
             statement.setString(4, modificarSede.getTelefono_sede());
-            
-           
-             
-            statement.setInt(5, (int) Integer.parseInt((String) modificarSede.getId_sede()));
+            statement.setInt(5, (int) Integer.parseInt(modificarSede.getId_sede()));
             
          
 
@@ -92,7 +89,6 @@ public class DatosSedesDao {
                 conexion.close();
             }
         }
-
         //Retornar la instancia del material o el nulo para validaciones posteriores
         return sedeActualizar; 
     }
