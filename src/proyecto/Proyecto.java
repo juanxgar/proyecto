@@ -9,9 +9,9 @@ import controller.Controlador;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.dao.DatosEmpleadosDao;
-import model.dao.DatosUsuarioDao;
+import model.dao.empleado.DatosUsuarioDao;
 import model.vo.DatosEmpleados;
-import model.vo.DatosUsuario;
+import model.vo.empleado.DatosUsuario;
 
 /**
  *

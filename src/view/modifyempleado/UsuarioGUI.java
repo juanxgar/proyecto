@@ -13,10 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import model.dao.DatosEmpleadosDao;
-import model.dao.DatosUsuarioDao;
-import model.vo.DatosEmpleados;
-import model.vo.DatosUsuario;
+import model.dao.empleado.DatosUsuarioDao;
+import model.vo.empleado.DatosUsuario;
 
 /**
  *
@@ -74,7 +72,7 @@ public class UsuarioGUI extends javax.swing.JFrame {
         
         
         //El objeto se covierte a un arreglo usando el metodo de esta clase el cual recibe el arraylist del tipo consultaEmpleados y el numero de columnas
-        String[][] lista2 = formatoRegistros(lista, 3);
+        String[][] lista2 = formatoRegistros(lista, 2);
         int existeUsuario= c.existeUsuario(getTfUsuarioNuevo().getText());
         
         String usuarioAnt="";
@@ -82,11 +80,12 @@ public class UsuarioGUI extends javax.swing.JFrame {
         
         for(int i = 0; i<lista.size(); i++){
             
-            if(lista2[i][1].equals(getTfUsuarioAnt().getText())){
-                usuarioAnt=lista2[i][1];
-            }
-            if(lista2[i][2].equals(getTfContrasenia().getText())){
-                contrasenia=lista2[i][2];
+            //Corresponde al valor que hay que buscar, que en este caso, es a partir del usuario anterior
+            //Se obtiene la contraseña a partir de la posicion donde esta almacenado el usuario
+            if(lista2[i][0].equals(getTfUsuarioAnt().getText())){
+                usuarioAnt=lista2[i][0];
+                contrasenia=lista2[i][1];
+                
             }
         }
         
@@ -148,9 +147,8 @@ public class UsuarioGUI extends javax.swing.JFrame {
 
         //Desenvolver los objetos de la colección
         for (int i = 0; i < consulta.size(); i++) {
-            registros[i][0] = consulta.get(i).getUsuarioNuevo();
-            registros[i][1] = consulta.get(i).getUsuarioAnt();
-            registros[i][2] = consulta.get(i).getContrasenia();   
+            registros[i][0] = consulta.get(i).getUsuarioAnt();
+            registros[i][1] = consulta.get(i).getContrasenia();   
         }
 
         //Retornar registros en formato JTable

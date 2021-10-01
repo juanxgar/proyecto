@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.vo;
 
 /**
- *
- * @author usuario
+ *Clase que obtiene los metodos setters y getters para hacer las validaciones y actualizaciones en la base de datos
+ * @author Juan Diego
  */
 public class DatosEmpleados {
    
@@ -23,6 +18,7 @@ public class DatosEmpleados {
     private String cargo;
     private String id_sede;
 
+    
     public DatosEmpleados(){
         
     }
@@ -41,26 +37,47 @@ public class DatosEmpleados {
         this.id_sede=id_sede;
     }
     
+    /**
+     * Obtiene el id de empleado
+     * @return int id_empleado
+     */
     public int getId_empleado() {
         return id_empleado;
     }
 
+    /**
+     * Setea el valor del id empleado
+     * @param id_empleado 
+     */
     public void setId_empleado(int id_empleado) {
         this.id_empleado = id_empleado;
     }
 
+    /**
+     * Obtiene el usuario de empleado
+     * @return Strig usuario
+     */
     public String getUsuario() {
         return usuario;
     }
 
+    /**
+     * Setea el valor del ususario empleado
+     * @param usuario 
+     */
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
+    
     
     public String getContrasenia() {
         return contrasenia;
     }
 
+    /**
+     * Setea el valor del ususario empleado
+     * @param usuario 
+     */
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
@@ -69,6 +86,10 @@ public class DatosEmpleados {
         return nombre;
     }
 
+    /**
+     * Setea el valor del ususario empleado
+     * @param usuario 
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

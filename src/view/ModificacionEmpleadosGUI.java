@@ -7,7 +7,10 @@ package view;
 
 import java.util.ArrayList;
 import model.vo.DatosEmpleados;
+import view.modifyempleado.ContraseniaGUI;
+import view.modifyempleado.NombreGUI;
 import view.modifyempleado.UsuarioGUI;
+import view.modifysede.TelefonoGUI;
 
 /**
  *
@@ -177,6 +180,11 @@ public class ModificacionEmpleadosGUI extends javax.swing.JFrame {
         rbtncontrasenia.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         rbtncontrasenia.setForeground(new java.awt.Color(238, 112, 82));
         rbtncontrasenia.setText("Contraseña");
+        rbtncontrasenia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtncontraseniaMouseClicked(evt);
+            }
+        });
         rbtncontrasenia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtncontraseniaActionPerformed(evt);
@@ -188,6 +196,11 @@ public class ModificacionEmpleadosGUI extends javax.swing.JFrame {
         rbtnNombre.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         rbtnNombre.setForeground(new java.awt.Color(238, 112, 82));
         rbtnNombre.setText("Nombre");
+        rbtnNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtnNombreMouseClicked(evt);
+            }
+        });
         rbtnNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnNombreActionPerformed(evt);
@@ -199,6 +212,11 @@ public class ModificacionEmpleadosGUI extends javax.swing.JFrame {
         rbtnTelefono.setFont(new java.awt.Font("Decker", 0, 18)); // NOI18N
         rbtnTelefono.setForeground(new java.awt.Color(238, 112, 82));
         rbtnTelefono.setText("Telefono");
+        rbtnTelefono.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rbtnTelefonoMouseClicked(evt);
+            }
+        });
         rbtnTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnTelefonoActionPerformed(evt);
@@ -243,6 +261,7 @@ public class ModificacionEmpleadosGUI extends javax.swing.JFrame {
 
     private void rbtncontraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtncontraseniaActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_rbtncontraseniaActionPerformed
 
     private void rbtnNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnNombreActionPerformed
@@ -275,6 +294,27 @@ public class ModificacionEmpleadosGUI extends javax.swing.JFrame {
         consulta.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void rbtncontraseniaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtncontraseniaMouseClicked
+        // TODO add your handling code here:
+        ContraseniaGUI contrasenia = new ContraseniaGUI();
+        contrasenia.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_rbtncontraseniaMouseClicked
+
+    private void rbtnNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnNombreMouseClicked
+        // TODO add your handling code here:
+        NombreGUI nombre = new NombreGUI();
+        nombre.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_rbtnNombreMouseClicked
+
+    private void rbtnTelefonoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rbtnTelefonoMouseClicked
+        // TODO add your handling code here:
+        TelefonoGUI telefono = new TelefonoGUI();
+        telefono.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_rbtnTelefonoMouseClicked
 
     /**
      * @param args the command line arguments

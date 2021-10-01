@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.dao;
 
 import java.sql.Connection;
@@ -15,11 +10,15 @@ import model.vo.DatosEmpleados;
 import util.JDBCUtilities;
 
 /**
- *
- * @author usuario
+ *Se hacen los llamados a la base de datos de la tabla de empleados
+ * @author Juan Diego Garcia
  */
 public class DatosEmpleadosDao {
     
+    /**
+     * Enlista los registros de la tabla empleados de la base de datois
+     * @return ArrayList de Datos de empleados
+     */
     public ArrayList<DatosEmpleados> listaEmpleados(){
         
         ArrayList<DatosEmpleados> respuesta = new ArrayList<>();
@@ -54,8 +53,14 @@ public class DatosEmpleadosDao {
             JOptionPane.showMessageDialog(null, "Error en la consulta " + e);
         }
         return respuesta;
-    }
+    } 
     
+    /**
+     * Permite hacer el registro de un empleado a la base de datos
+     * @param nuevoEmpleado de tipo objeto de la clase de DatosEmpleados
+     * @return DatosEmpleados objeto de ese tipo
+     * @throws SQLException 
+     */
     public DatosEmpleados registrarEmpleado(DatosEmpleados nuevoEmpleado) throws SQLException{
         DatosEmpleados empleadoRegistrado = null;
         Connection conexion = null;
@@ -104,6 +109,12 @@ public class DatosEmpleadosDao {
         return empleadoRegistrado; 
     }
     
+    /**
+     * Permite eliminar o desactivar un empleado de la base de datos
+     * @param eliminaEmpleado de tipo objeto de la clase DatosEmpleados
+     * @return DatosEmpleados onjeto de este tipo
+     * @throws SQLException 
+     */
     public DatosEmpleados eliminarEmpleado(DatosEmpleados eliminaEmpleado) throws SQLException{
         DatosEmpleados empleadoEliminado = null;
         Connection conexion = null;

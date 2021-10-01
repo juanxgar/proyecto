@@ -13,8 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import model.dao.DatosContraseniaDao;
-import model.vo.DatosContrasenia;
+import model.dao.empleado.DatosContraseniaDao;
+import model.vo.empleado.DatosContrasenia;
 
 /**
  *
